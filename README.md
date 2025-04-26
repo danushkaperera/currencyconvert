@@ -25,15 +25,15 @@ This README would normally document whatever steps are necessary to get your app
 # 📦 Installation
 
 * Clone the repository and install dependencies:
-    ```
-    git clone https://github.com/danushkaperera/currencyconvert.git
-    cd currencyconvert
-    npm install
-    ```
-    #or
-    ``` 
-    yarn install 
-    ```
+ ```
+git clone https://github.com/danushkaperera/currencyconvert.git
+cd currencyconvert
+npm install
+```
+#or
+``` 
+yarn install 
+```
 # Running the App
 
 * Start the Metro bundler:
