@@ -30,7 +30,7 @@ This README would normally document whatever steps are necessary to get your app
     cd currencyconvert
     npm install
     ```
-* or
+    #or
     ``` 
     yarn install 
     ```
@@ -50,6 +50,13 @@ npx react-native run-ios
 
 * Update a env.js file in the root directory and add your Open Exchange Rates API key:
 ```
-OPEN_EXCHANGE_RATES_API_KEY=your_api_key_here
+API_KEY=your_api_key_here
 ```
+# API Reference
 
+* Live Rates Endpoint:
+`` https://openexchangerates.org/api/latest.json?app_id=API_KEY ``
+
+* Historical Rates Endpoint:
+
+`` https://openexchangerates.org/api/historical/{date}.json?app_id=API_KEY ``
