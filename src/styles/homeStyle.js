@@ -37,15 +37,17 @@ const homeStyle = StyleSheet.create({
         marginBottom: 16,
       },
       flag: {
-        fontSize: 32,
-        marginRight: 16,
+        width: 25,
+        height: 25,
+        // fontSize: 32,
+        margin: 6,
+        borderRadius: 20, 
        
       },
       flagIco:{
-        width: 40,
-        height: 40,
-        borderRadius: 20, 
-        backgroundColor: '#eee',
+        
+        // borderRadius: 20, 
+        // backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
         // marginRight: 0, // s
@@ -82,10 +84,10 @@ const homeStyle = StyleSheet.create({
       },
 
       linkButton: {
-        width:30,
-        borderLeftWidth: 2,
+        width:50,
+        borderLeftWidth: 1,
         borderLeftColor: '#ccc', 
-        marginLeft: 10,        
+        marginLeft: 1,        
         justifyContent: 'center',
         // backgroundColor:'#000'
       },
@@ -97,7 +99,7 @@ const homeStyle = StyleSheet.create({
       },
       rateAmmount:{
         alignItems: 'right',
-        padding:14,
+        padding:10,
         justifyContent: 'center'
       },
 
@@ -117,14 +119,14 @@ const homeStyle = StyleSheet.create({
 
 
 
-      surface: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        elevation: 4,
-        padding: 6,
-        // margin: 6,
-        borderRadius: 10,
-      },
+      // surface: {
+      //   flexDirection: 'row',
+      //   alignItems: 'center',
+      //   elevation: 4,
+      //   padding: 6,
+      //   // margin: 6,
+      //   borderRadius: 10,
+      // },
     //   flag: {
     //     fontSize: 24,
     //     marginRight: 12,

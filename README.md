@@ -4,9 +4,9 @@ This README would normally document whatever steps are necessary to get your app
 
 ### What is this repository for? ###
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+* This is sample test project to convert currency using https://openexchangerates.org/api/ thirdparty API. 
+* Used React Native 0.79.1 
+* 
 
 ### How do I get set up? ###
 

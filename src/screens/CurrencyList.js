@@ -2,32 +2,31 @@ import {getRequest} from '../api/client'
 import React, { useState, useEffect } from 'react';
 import getStyles from '../styles/homeStyle';
 import { Alert, useColorScheme,Text, View, FlatList, SafeAreaView } from 'react-native';
-import { Surface,Appbar, Button,TouchableRipple, IconButton, TextInput, Dialog, Portal } from 'react-native-paper';
-
+import { Surface,Appbar, Button, IconButton, TextInput, Dialog, Portal } from 'react-native-paper';
+import CountryFlag from "react-native-country-flag";
+import ChartModal from '../components/ChartModal';
 
 const CurrencyList = () => {
   const CURRENCIES = [
-    { code: 'USD', name: 'US Dollar', flag: '🇺🇸' },
-    { code: 'EUR', name: 'Euro', flag: '🇪🇺' },
-    { code: 'JPY', name: 'Japanese Yen', flag: '🇯🇵' },
-    { code: 'LKR', name: 'Sri Lankan', flag: '🇱🇰' },
-    { code: 'CAD', name: 'Canadian Dollar', flag: '🇨🇦' },
+    { code: 'USD', name: '$', flag: 'US' },
+    { code: 'EUR', name: '€', flag: 'EU' },
+    { code: 'JPY', name: '¥', flag: 'JP' },
+    { code: 'LKR', name: 'Rs', flag: 'LK' },
+    { code: 'CAD', name: '$', flag: 'CA' },
   ];
     const styles = getStyles();
-    const isDarkMode = useColorScheme() === 'dark';
+    // const isDarkMode = useColorScheme() === 'dark';
 
     const [editing, setEditing] = useState(false);
-    const [visible, setVisible] = useState(false);
     const [tempAmount, setTempAmount] = useState(audAmount);
-    const [audAmount, setAudAmount] = useState('1.00');
+    const [audAmount, setAudAmount] = useState(1);
     const [rates, setRates] = useState({});
+    const [modalVisible, setModalVisible] = useState(false);
+    const [modalCurrency, setModalCurrency] = useState('AU');
 
-    const openDialog = () => {
-      setTempAmount(audAmount);
-      setEditing(true);
-    };
 
     const handleAmountChange = () => {
+        // Alert.alert(tempAmount);
       setAudAmount(tempAmount);
       setEditing(false);
     };
@@ -42,12 +41,9 @@ const CurrencyList = () => {
         //Convert USD base currency rate to AUD Base
         const audRate = response.data.rates['AUD']; 
         const ratesFromAUD = {};
-        const newRates = {};
         CURRENCIES.forEach(({ code }) => {
-          newRates[code] = response.data.rates[code];
-          ratesFromAUD[code] = newRates[code]/audRate
+          ratesFromAUD[code] = response.data.rates[code]/audRate
         });
-        // Alert.alert("Response", JSON.stringify(response.data.rates)); 
         setRates(ratesFromAUD);
       } catch (error) {
         console.error('Error fetching exchange rates:', error);
@@ -64,11 +60,9 @@ const EditableSurface = () => {
   <Surface style={styles.currencySurface}>
     <View style={styles.currencyIcon}>
       <View style={styles.flagIco}>
-      <Text style={styles.flag}>🇦🇺</Text>
+        <CountryFlag style={styles.flag} isoCode="AU" size={14} />
       </View>
-      <Text style={styles.currencyText}>
-          AUD 
-      </Text>
+      <Text style={styles.currencyText}> AUD </Text>
     </View>
 
   <View style={styles.rightSection}>
@@ -79,9 +73,9 @@ const EditableSurface = () => {
            
       </View>
       <View style={styles.linkButton}>
-        <IconButton
+        <IconButton icon="calculator" size={30} iconColor="#c5c5c5" style={{ alignSelf: 'center' }}
           onPress={() => setEditing(true)}
-            rippleColor="rgba(0, 0, 0, .32)"
+          rippleColor="rgba(0, 0, 0, .32)"
           >
         </IconButton>
       </View>
@@ -99,7 +93,7 @@ const EditableSurface = () => {
       <Surface style={styles.currencySurface}>
         <View style={styles.currencyIcon}>
           <View style={styles.flagIco}>
-          <Text style={styles.flag}>{item.flag}</Text>
+          <CountryFlag style={styles.flag} isoCode={item.flag} size={14} />
           </View>
           <Text style={styles.currencyText}>
             {item.code}
@@ -109,7 +103,7 @@ const EditableSurface = () => {
         <View style={styles.rightSection}>
           <View style={styles.rateAmmount}>
             <Text style={styles.currencyText}>
-            {rates[item.code] ? (parseFloat(audAmount) * rates[item.code]).toFixed(2) : '...'}
+            {item.name} {rates[item.code] ? (parseFloat(audAmount) * rates[item.code]).toFixed(2) : '...'}
             </Text>
             <Text style={styles.currencyMiniText}>
             1 AUD = {rates[item.code] ? rates[item.code].toFixed(4) : '...'} {item.code}
@@ -117,7 +111,10 @@ const EditableSurface = () => {
           </View>
           <View style={styles.linkButton}>
             <IconButton
-                onPress={() => console.log('Pressed')}
+                onPress={() => {
+                  setModalCurrency(item.flag); 
+                  setModalVisible(true);
+                }} 
                 rippleColor="rgba(0, 0, 0, .32)"
               >
             </IconButton>
@@ -130,7 +127,7 @@ const EditableSurface = () => {
     return (
       <View style={styles.homeContainer}>
       <Appbar.Header>
-        <Appbar.Content title="Currency Convertor" />
+        <Appbar.Content mode='center-aligned' title="Currency Convertor" />
       </Appbar.Header>
 
       <View style={styles.viewContainer}>
@@ -147,13 +144,13 @@ const EditableSurface = () => {
             />
 
           <Portal>
-            <Dialog visible={editing} onDismiss={() => setVisible(false)}>
+            <Dialog visible={editing} onDismiss={() => setEditing(false)}>
               <Dialog.Title>Update AUD Amount</Dialog.Title>
               <Dialog.Content>
                 <TextInput
                   label="AUD Amount"
                   keyboardType="numeric"
-                  value={tempAmount}
+                  value={tempAmount ? tempAmount : 1 }
                   onChangeText={(text) => setTempAmount(text)}
                   autoFocus
                 />
@@ -164,6 +161,11 @@ const EditableSurface = () => {
             </Dialog>
           </Portal>
 
+          <ChartModal
+              visible={modalVisible}
+              currencyCode = {modalCurrency}
+              onClose={() => setModalVisible(false)}
+            />
 
           </View>
         </View>

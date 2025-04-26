@@ -17,7 +17,7 @@ ios/DerivedData/
 android/.gradle/
 android/app/build/
 android/build/
-
+android/local.properties
 # React Native / Xcode
 *.xcworkspace
 *.xcodeproj/project.xcworkspace/

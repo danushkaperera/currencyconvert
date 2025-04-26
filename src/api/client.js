@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { API_BASE_URL, API_KEY } from '../../env';
-import { ScrollView, Alert} from 'react-native';
 const apiClient = axios.create({
     baseURL: API_BASE_URL,
     timeout: 10000, // Optional: 10s timeout
@@ -11,9 +10,6 @@ const apiClient = axios.create({
   
   // Interceptor for request logging (optional)
   apiClient.interceptors.request.use((config) => {
-    const fullUrl = `${config.url}?${new URLSearchParams(config.params).toString()}`;
-
-    console.log('Request:', config);
     return config;
   });
   
