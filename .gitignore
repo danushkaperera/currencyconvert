@@ -1,0 +1,68 @@
+# Node modules
+node_modules/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+expo-debug.log
+
+# React Native / iOS
+ios/Pods/
+ios/build/
+ios/DerivedData/
+
+# React Native / Android
+android/.gradle/
+android/app/build/
+android/build/
+
+# React Native / Xcode
+*.xcworkspace
+*.xcodeproj/project.xcworkspace/
+*.xcuserstate
+*.xcuserdata/
+
+# React Native / JetBrains
+.idea/
+
+# Metro
+.expo/
+.expo-shared/
+metro-cache/
+react-native-packager-cache-*/
+
+# Watchman
+.watchmanconfig
+
+# Babel
+.babelrc
+babel.config.js
+
+# Buck
+.buckconfig
+.buckd/
+
+# Flow
+.flowconfig
+
+# Fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots
+
+# Misc
+.env
+.env.*.local
+*.keystore
+*.jks
+*.p8
+*.p12
+
+# macOS
+.DS_Store
+
+# VSCode
+.vscod
+
