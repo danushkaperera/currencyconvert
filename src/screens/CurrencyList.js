@@ -112,7 +112,7 @@ const EditableSurface = () => {
           <View style={styles.linkButton}>
             <IconButton
                 onPress={() => {
-                  setModalCurrency(item.flag); 
+                  setModalCurrency(item.code); 
                   setModalVisible(true);
                 }} 
                 rippleColor="rgba(0, 0, 0, .32)"
@@ -126,8 +126,8 @@ const EditableSurface = () => {
 
     return (
       <View style={styles.homeContainer}>
-      <Appbar.Header>
-        <Appbar.Content mode='center-aligned' title="Currency Convertor" />
+      <Appbar.Header mode='center-aligned'>
+        <Appbar.Content  title="Currency Convertor" />
       </Appbar.Header>
 
       <View style={styles.viewContainer}>
@@ -151,7 +151,7 @@ const EditableSurface = () => {
                   label="AUD Amount"
                   keyboardType="numeric"
                   value={tempAmount ? tempAmount : 1 }
-                  onChangeText={(text) => setTempAmount(text)}
+                  onChangeText={(text) => setTempAmount(text === '' ? '' : parseFloat(text))}
                   autoFocus
                 />
               </Dialog.Content>

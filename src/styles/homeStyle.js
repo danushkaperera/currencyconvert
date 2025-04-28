@@ -117,30 +117,6 @@ const homeStyle = StyleSheet.create({
         textAlign:'right'
       },
 
-
-
-      // surface: {
-      //   flexDirection: 'row',
-      //   alignItems: 'center',
-      //   elevation: 4,
-      //   padding: 6,
-      //   // margin: 6,
-      //   borderRadius: 10,
-      // },
-    //   flag: {
-    //     fontSize: 24,
-    //     marginRight: 12,
-    //   },
-
-      input: {
-        flex: 1,
-        fontSize: 18,
-        backgroundColor: 'transparent',
-      },
-
-
-
-
       surface: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -152,24 +128,23 @@ const homeStyle = StyleSheet.create({
         
     
       },
-    
       modalContainer: {
+        flex: 1,
+        backgroundColor: 'rgba(0,0,0,0.4)',
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
+      chartBox: {
         backgroundColor: 'white',
-        margin: 20,
-        padding: 16,
-        borderRadius: 8,
+        padding: 10,
+        borderRadius: 12,
+        alignItems: 'center',
+        width: '90%',
       },
       title: {
-        fontSize: 18,
+        fontSize: 12,
         fontWeight: 'bold',
-        marginBottom: 12,
-        textAlign: 'center',
-      },
-      chart: {
-        marginVertical: 8,
-      },
-      closeButton: {
-        marginTop: 16,
+        marginBottom: 10,
       },
 
 });
