@@ -59,3 +59,11 @@ API_KEY=your_api_key_here
 
 * Historical Rates Endpoint:
 `` https://openexchangerates.org/api/historical/{date}.json?app_id=API_KEY ``
+
+## 📸 Screenshots
+
+### Home
+![Home](./assets/home_screen.png)
+
+### Chart
+![Chart](./assets/chart_screen.png)

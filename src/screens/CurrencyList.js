@@ -151,7 +151,10 @@ const EditableSurface = () => {
                   label="AUD Amount"
                   keyboardType="numeric"
                   value={tempAmount ? tempAmount : 1 }
-                  onChangeText={(text) => setTempAmount(text === '' ? '' : parseFloat(text))}
+                  onChangeText={(text) => {
+                    const numericText = text.replace(/[^0-9.]/g, '');
+                    setTempAmount(numericText)
+                    ;}}
                   autoFocus
                 />
               </Dialog.Content>
