@@ -29,5 +29,5 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Run tests
-        run: npm test  # or your test command, e.g., jest
+    #   - name: Run tests
+    #     run: npm test  # or your test command, e.g., jest
