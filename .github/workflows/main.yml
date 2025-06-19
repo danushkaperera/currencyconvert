@@ -1,33 +1,45 @@
-name: React Native CI
+name: Manual Deploy to UAT or Production
 
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Select environment to deploy to'
+        required: true
+        default: 'uat'
+        type: choice
+        options:
+          - uat
+          - production
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+      - name: Set target deployment path
+        id: set-vars
+        run: |
+          if [ "${{ github.event.inputs.environment }}" == "production" ]; then
+            echo "server_path=${{ secrets.PROD_FTP_REMOTE_PATH }}" >> $GITHUB_OUTPUT
+            echo "ftp_host=${{ secrets.PROD_FTP_HOST }}" >> $GITHUB_OUTPUT
+            echo "ftp_user=${{ secrets.PROD_FTP_USERNAME }}" >> $GITHUB_OUTPUT
+            echo "ftp_pass=${{ secrets.PROD_FTP_PASSWORD }}" >> $GITHUB_OUTPUT
+          else
+            echo "server_path=${{ secrets.UAT_FTP_REMOTE_PATH }}" >> $GITHUB_OUTPUT
+            echo "ftp_host=${{ secrets.UAT_FTP_HOST }}" >> $GITHUB_OUTPUT
+            echo "ftp_user=${{ secrets.UAT_FTP_USERNAME }}" >> $GITHUB_OUTPUT
+            echo "ftp_pass=${{ secrets.UAT_FTP_PASSWORD }}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Deploy to selected environment
+        uses: SamKirkland/FTP-Deploy-Action@v4
         with:
-          node-version: 20  # Use Node.js 21 or your required version
-
-      - name: Cache node_modules
-        uses: actions/cache@v3
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-
-      - name: Install dependencies
-        run: npm install
-
-    #   - name: Run tests
-    #     run: npm test  # or your test command, e.g., jest
+          server: ${{ steps.set-vars.outputs.ftp_host }}
+          username: ${{ steps.set-vars.outputs.ftp_user }}
+          password: ${{ steps.set-vars.outputs.ftp_pass }}
+          server-dir: ${{ steps.set-vars.outputs.server_path }}
+          local-dir: ./build  # or ./ for plain PHP
